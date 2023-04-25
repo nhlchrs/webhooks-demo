@@ -4,6 +4,14 @@ const app = express();
 
 // Create an instance of the http server to handle HTTP requests
 
+
+app.use((req, res, next) => {
+    if (req.originalUrl === '/') {
+        res.send('Welcome to my app!');
+    } else {
+        next();
+    }
+});
 app.get('/webhooks', (req, res) => {
     res.json({ title: "Nihal" });
 });
