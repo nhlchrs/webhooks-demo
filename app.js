@@ -8,10 +8,15 @@ app.get('/webhooks', (req, res) => {
     res.json({ title: "Nihal" });
 });
 
-// Start the server on port 3000
-const server = app.listen(5000, () => {
+
+var port = process.env.PORT || 4000;
+
+// Listen on `port` and 0.0.0.0
+app.listen(port, '0.0.0.0', function () {
     console.log('Node server running on port 3000');
+
 });
+
 
 // Handle unhandled rejections and exceptions
 process.on('unhandledRejection', (err, promise) => {
