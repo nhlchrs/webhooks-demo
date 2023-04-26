@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const accountSid = 'AC3da71bfdcbc71a1b832f2911d2bde238';
-const authToken = 'd1ad7fbf3858066af2ecd16d713e582b';
+const accountSid = process.env.ACCOUNT_ID;
+const authToken = process.env.AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
 app.use(bodyParser.json());
 // Create an instance of the http server to handle HTTP requests
