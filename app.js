@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const accountSid = 'AC3da71bfdcbc71a1b832f2911d2bde238';
+const authToken = 'd1ad7fbf3858066af2ecd16d713e582b';
+const client = require('twilio')(accountSid, authToken);
 app.use(bodyParser.json());
 // Create an instance of the http server to handle HTTP requests
 
@@ -12,16 +15,23 @@ app.use((req, res, next) => {
         next();
     }
 });
-app.get('https://webhooks-demo-production.up.railway.app/webhooks', (req, res) => {
+app.get('/webhooks/tradingview', (req, res) => {
     res.json({ title: "Nihal" });
 });
 
-app.post('https://webhooks-demo-production.up.railway.app/webhooks/tradingview', (req, res) => {
+app.post('/webhooks/tradingview', (req, res) => {
     // Extract the data from the webhook payload
     const data = req.body;
 
     // Process the data as needed
     console.log('Received webhook payload:', data);
+    client.calls.create({
+        twiml: '<Response><Say>Hello from Nihal!</Say></Response>',
+        to: '+918423864626',
+        from: '+16074008479'
+    })
+        .then(call => console.log(call.sid))
+        .catch(error => console.log(error));
 
     // Send a response to TradingView
     res.status(200).send('Webhook received successfully');
@@ -34,6 +44,9 @@ app.listen(port, '0.0.0.0', function () {
     console.log('Node server running on port 3000');
 
 });
+
+
+
 
 
 // Handle unhandled rejections and exceptions
